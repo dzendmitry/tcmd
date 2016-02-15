@@ -33,7 +33,7 @@ def flush(args):
 		execute(flush_cmd)
 
 def loss(args):
-	proto = {'udp': '17', 'tcp': '6'}
+	proto = {'udp': '17', 'tcp': '6', 'icmp': '1'}
 	prio_add_cmd = ['sudo', 'tc', 'qdisc', 'add', 'dev', args.interface, 'root', 'handle', '1:', 'prio']
 	if execute(prio_add_cmd):
 		return
@@ -85,8 +85,8 @@ if __name__ == '__main__':
 		help='set the percentage of packet loss')
 	parser_loss.add_argument('percent',
 		help='percent of loss packets [0-100]%%')
-	parser_loss.add_argument('-p', default='udp', choices=['tcp', 'udp'],
-		help='protocol from /etc/protocols {tcp, udp}. udp by default')
+	parser_loss.add_argument('-p', default='udp', choices=['tcp', 'udp', 'icmp'],
+		help='protocol from /etc/protocols {tcp, udp, icmp}. udp by default')
 	parser_loss.set_defaults(func=loss)
 
 	args = cli_parser.parse_args()
